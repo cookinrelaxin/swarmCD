@@ -7,7 +7,6 @@ import (
     "os"
     "os/exec"
     "strings"
-    "flag"
     "log"
     "errors"
     "strconv"
@@ -56,28 +55,28 @@ var (
     githubPassword string
 )
 
+/*
+ * Verify that the required environement variables exist.
+ */
 func init() {
-    /*
-    * Verify that the required command-line flags exist.
-    */
-    flag.StringVar(&dockerHubUsername, "docker-hub-username", "", "Specify your Docker Hub username")
-    flag.StringVar(&dockerHubPassword, "docker-hub-password", "", "Specify your Docker Hub password")
-    flag.StringVar(&githubUsername, "github-username", "", "Specify your Github username")
-    flag.StringVar(&githubPassword, "github-password", "", "Specify your Github password")
-    flag.Parse()
+
+    dockerHubUsername := os.Getenv("DOCKER_HUB_USERNAME")
+    dockerHubPassword := os.Getenv("DOCKER_HUB_PASSWORD")
+    githubUsername := os.Getenv("GITHUB_USERNAME")
+    githubPassword := os.Getenv("GITHUB_PASSWORD")
 
     switch {
     case dockerHubUsername == "":
-        fmt.Println("Error: -docker-hub-username required. Set -h for instructions.")
+        fmt.Println("Error: environement variable DOCKER_HUB_USERNAME required.")
         os.Exit(1)
     case dockerHubPassword == "":
-        fmt.Println("Error: -docker-hub-password required. Set -h for instructions.")
+        fmt.Println("Error: environement variable DOCKER_HUB_PASSWORD required.")
         os.Exit(1)
     case githubUsername == "":
-        fmt.Println("Error: -github-username required. Set -h for instructions.")
+        fmt.Println("Error: environment variable GITHUB_USERNAME required.")
         os.Exit(1)
     case githubPassword == "":
-        fmt.Println("Error: -github-password required. Set -h for instructions.")
+        fmt.Println("Error: environment variable GITHUB_PASSWORD required.")
         os.Exit(1)
     }
 }
