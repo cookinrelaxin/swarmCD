@@ -14,7 +14,8 @@ import (
     "golang.org/x/net/context"
     "google.golang.org/grpc"
     // "github.com/golang/protobuf/proto"
-    pb "./service_updater_protocol"
+    // pb "./service_updater_protocol"
+    pb "github.com/cookinrelaxin/service_updater/protocol"
 )
 
 /*
@@ -46,7 +47,7 @@ import (
 
 const (
     repositoriesDir string = "/tmp/cloned_repositories/"
-    updaterHostname string = "service_updater"
+    updaterHostname string = "service_updater:8080"
 )
 
 var (
@@ -257,13 +258,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
         }
 
         newImageName := dockerHubUsername + "/" + push_event.Repository.Name + ":" + strconv.Itoa(versionNumber)
-        if err := buildImage(newImageName); err != nil {
-            panic(err)
-        }
-
-        if err := pushImage(newImageName); err != nil {
-            panic(err)
-        }
+/*
+ *         if err := buildImage(newImageName); err != nil {
+ *             panic(err)
+ *         }
+ * 
+ *         if err := pushImage(newImageName); err != nil {
+ *             panic(err)
+ *         }
+ */
 
         conn, err := grpc.Dial(updaterHostname, grpc.WithInsecure())
         if err != nil {
