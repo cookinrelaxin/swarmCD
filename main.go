@@ -13,8 +13,6 @@ import (
     "strconv"
     "golang.org/x/net/context"
     "google.golang.org/grpc"
-    // "github.com/golang/protobuf/proto"
-    // pb "./service_updater_protocol"
     pb "github.com/cookinrelaxin/service_updater/protocol"
 )
 
