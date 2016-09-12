@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package service_updater;
+
+service ServiceUpdater {
+    /*
+     * Accepts an update request for a Docker swarm-mode service.
+     */
+    rpc UpdateService(UpdateRequest) returns (UpdateResponse) {}
+}
+
+message UpdateRequest {
+    /*
+     * The name of the service within the swarm. This is not necessarily the name of the image. Example: polymer-demo
+     */
+    string serviceName = 1;
+
+    /*
+     * The name of the image with which to update the service. This should be in the typical Docker image form. Example: cookinrelaxin/polymer-demo:18
+     */
+    string imageName = 2;
+}
+
+message UpdateResponse {
+    /*
+     * The status code of the service update operation.
+     */
+    enum Status {
+        SUCCESS = 0;
+        FAILURE = 1;
+    }
+    Status status = 1;
+
+    /*
+     * The exact message returned by Docker Engine upon attempting to update the service.
+     */
+    string message = 1;
+}
